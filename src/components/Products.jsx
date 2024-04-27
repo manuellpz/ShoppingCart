@@ -4,6 +4,7 @@ import {
   shoppingReducer,
 } from "../reducers/shoppingReducer";
 import ProductItem from "./ProductItem";
+import { TYPES } from "../actions/shoppingAction";
 
 const Products = () => {
   const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState);
@@ -17,6 +18,15 @@ const Products = () => {
   const handleChangeCategories = (e) => {
     setCategorie(e.target.value);
   };
+
+  const addToCart = (id) => {
+    dispatch({ type: TYPES.ADD_TO_CART, payload: id });
+  };
+
+  let filteredProducts = products.filter(
+    (p) =>
+      p.price >= rangeValue && (p.category === categorie || categorie === "")
+  );
 
   return (
     <>
@@ -36,6 +46,7 @@ const Products = () => {
         <div>
           <label htmlFor="categories">Categorias: </label>
           <select id="categories" onChange={handleChangeCategories}>
+            <option value="all">Todo</option>
             <option value="electronics">Electrónica</option>
             <option value="jewelery">Joyeria</option>
             <option value="men's clothing">Ropa Hombre</option>
@@ -46,11 +57,13 @@ const Products = () => {
       <br />
       <br />
       <article className="container">
-        {products
-          .filter((p) => p.price >= rangeValue && (p.category === categorie || categorie===""))
-          .map((item) => (
-            <ProductItem data={item} key={item.id} />
-          ))}
+        {categorie === "all"
+          ? products.map((item) => (
+              <ProductItem data={item} key={item.id} addToCart={addToCart} />
+            ))
+          : filteredProducts.map((item) => (
+              <ProductItem data={item} key={item.id} addToCart={addToCart} />
+            ))}
       </article>
     </>
   );
