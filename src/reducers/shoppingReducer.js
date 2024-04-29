@@ -6,9 +6,13 @@ const getProducts = async () => {
   return data;
 };
 
+const getQuantityCartItems = () => {
+  return JSON.parse(localStorage.getItem("cart"))
+}
+
 export const shoppingInitialState = {
   products: await getProducts(),
-  cart: [],
+  cart: getQuantityCartItems(),
 };
 
 export function shoppingReducer(state, action) {

@@ -10,27 +10,33 @@ const Products = () => {
   const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState);
   const { products, cart } = state;
   const [rangeValue, setRangeValue] = useState(0);
-  const [categorie, setCategorie] = useState("");
+  const [category, setCategory] = useState("all");
 
   const handleMinPrice = (e) => {
     setRangeValue(e.target.value);
   };
   const handleChangeCategories = (e) => {
-    setCategorie(e.target.value);
+    setCategory(e.target.value);
   };
 
   const addToCart = (id) => {
     dispatch({ type: TYPES.ADD_TO_CART, payload: id });
   };
+  localStorage.setItem("cart",JSON.stringify(cart));
 
   let filteredProducts = products.filter(
     (p) =>
-      p.price >= rangeValue && (p.category === categorie || categorie === "")
+      p.price >= rangeValue && (p.category === category || category === "all")
   );
+
 
   return (
     <>
       <h2 style={{ textAlign: "center" }}>Productos</h2>
+      <div className="cart">
+        <i className="fa-solid fa-shopping-cart fa-lg"></i>
+        <strong className="counter">{cart.length}</strong>
+      </div>
       <div className="filters">
         <div>
           <label htmlFor="minPrice">A partir de: </label>
@@ -57,13 +63,13 @@ const Products = () => {
       <br />
       <br />
       <article className="container">
-        {categorie === "all"
-          ? products.map((item) => (
-              <ProductItem data={item} key={item.id} addToCart={addToCart} />
-            ))
-          : filteredProducts.map((item) => (
-              <ProductItem data={item} key={item.id} addToCart={addToCart} />
-            ))}
+        {filteredProducts.length === 0 ? (
+          <h3>¡NO SE ENCONTRO PRODUCTO!</h3>
+        ) : (
+          filteredProducts.map((item) => (
+            <ProductItem data={item} key={item.id} addToCart={addToCart} />
+          ))
+        )}
       </article>
     </>
   );
