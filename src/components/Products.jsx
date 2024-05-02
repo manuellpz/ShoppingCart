@@ -4,6 +4,7 @@ import {
   shoppingReducer,
 } from "../reducers/shoppingReducer";
 import ProductItem from "./ProductItem";
+import Cart from "./Cart";
 import { TYPES } from "../actions/shoppingAction";
 
 const Products = () => {
@@ -11,6 +12,7 @@ const Products = () => {
   const { products, cart } = state;
   const [rangeValue, setRangeValue] = useState(0);
   const [category, setCategory] = useState("all");
+  const [page, setPage] = useState("Home")
 
   const handleMinPrice = (e) => {
     setRangeValue(e.target.value);
@@ -29,11 +31,20 @@ const Products = () => {
       p.price >= rangeValue && (p.category === category || category === "all")
   );
 
+  const goCart = () => {
+    setPage("Cart")
+  }
+  const goHome = () => {
+    setPage("Home")
+  }
+
 
   return (
-    <>
+    page === "Home" 
+    ?
+    <div>
       <h2 style={{ textAlign: "center" }}>Productos</h2>
-      <div className="cart">
+      <div className="cart" onClick={goCart}>
         <i className="fa-solid fa-shopping-cart fa-lg"></i>
         <strong className="counter">{cart.length}</strong>
       </div>
@@ -71,7 +82,9 @@ const Products = () => {
           ))
         )}
       </article>
-    </>
+    </div>
+    :
+    <Cart cart={cart} goHome={goHome}/>
   );
 };
 export default Products;

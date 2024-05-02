@@ -96,3 +96,45 @@ header > h1 {
   background:#ffd814;
   padding:3px;
 }
+
+.cart-container {
+  width: 80vw;
+  border: thin solid silver;
+  background:#fff;
+  border-radius:8px;
+  padding:1rem;
+  display:block;
+  margin:auto;
+  text-align: center;
+  font-weight: bold;
+
+  & img {
+    width: 100px;
+    margin-bottom: 1rem;
+  }
+
+  & .product-row {
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    align-items: center;
+  }
+  & .btn-delete {
+    padding:1rem;
+    background:#dc3545;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+
+    &:hover {
+      background:rgb(204, 3, 3);
+    }
+  }
+  & .btn-home {
+    padding:1rem;
+    border:none;
+    border-radius: 5px;
+    background: #ffd814;
+    cursor:pointer;
+  }
+}
