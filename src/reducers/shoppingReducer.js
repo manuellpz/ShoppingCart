@@ -40,5 +40,11 @@ export function shoppingReducer(state, action) {
             cart: [...state.cart, { ...newItem, quantity: 1 }],
           };
     }
+    case TYPES.REMOVE_FROM_CART: {
+      return {
+        ...state,
+        cart: state.cart.filter(item => item.id !== action.payload)
+      }
+    }
   }
 }

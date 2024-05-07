@@ -39,15 +39,19 @@ header > h1 {
 .item {
   background: #fff;
   width: 250px;
-  height: 380px;
+  height: 400px;
   padding: 1rem;
   border: thin solid silver;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   flex-flow: column;
   border-radius: 8px;
   transition: 0.6s ease-in-out;
+
+  /* & .txt_quantity {
+    padding: 5px;
+  } */
 
   & button {
     font-weight: bold;
@@ -98,7 +102,7 @@ header > h1 {
 }
 
 .cart-container {
-  width: 80vw;
+  width: 70vw;
   border: thin solid silver;
   background:#fff;
   border-radius:8px;
@@ -115,8 +119,9 @@ header > h1 {
 
   & .product-row {
     display:grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6 , 1fr);
     align-items: center;
+    gap:1rem;
   }
   & .btn-delete {
     padding:1rem;

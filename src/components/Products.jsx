@@ -6,6 +6,7 @@ import {
 import ProductItem from "./ProductItem";
 import Cart from "./Cart";
 import { TYPES } from "../actions/shoppingAction";
+import Swal from "sweetalert2";
 
 const Products = () => {
   const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState);
@@ -25,6 +26,24 @@ const Products = () => {
     dispatch({ type: TYPES.ADD_TO_CART, payload: id });
   };
   localStorage.setItem("cart",JSON.stringify(cart));
+
+  const deleteCartItem = (id) => {
+    // let accept = confirm("Removerá este producto del carrito, ¿Desea Continuar?");
+    // accept && dispatch({type:TYPES.REMOVE_FROM_CART, payload: id})
+    Swal.fire({
+      title: "Remover Producto Del Carrito",
+      text: "Deseas continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({type:TYPES.REMOVE_FROM_CART, payload: id})
+      }
+    });
+  }
 
   let filteredProducts = products.filter(
     (p) =>
@@ -84,7 +103,7 @@ const Products = () => {
       </article>
     </div>
     :
-    <Cart cart={cart} goHome={goHome}/>
+    <Cart cart={cart} goHome={goHome} deleteCartItem={deleteCartItem}/>
   );
 };
 export default Products;
